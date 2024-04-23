@@ -1,0 +1,20 @@
+version: "3.9"
+
+services:
+  #nome do serviço
+  local-postgres-compose:
+    #imagem do banco de dados do postgres
+    image: postgres
+    #variáveis de ambiente
+    environment:
+      POSTGRES_USER: "postgres"
+      #define a senha
+      POSTGRES_PASSWORD: "12345"
+    ports:
+        #exibe na porta 5432 da maquina e inicializa da 5432
+      - "5432:5432"
+    volumes:
+      #arquivo que vai ser anicializado pra criar o banco de dados
+      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
+      #onde de vai ficar armazenado os dados do banco de dados do docker
+      - './postgres-data:/var/lib/postgres/data'
