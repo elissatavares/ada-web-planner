@@ -2,9 +2,11 @@ version: "3.9"
 
 services:
   #nome do serviço
-  local-postgres-compose:
+  db-planner-postgres-compose:
     #imagem do banco de dados do postgres
     image: postgres
+    container_name: db-planner
+    restart: unless-stopped
     #variáveis de ambiente
     environment:
       POSTGRES_USER: "postgres"
@@ -15,6 +17,8 @@ services:
       - "5432:5432"
     volumes:
       #arquivo que vai ser anicializado pra criar o banco de dados
-      - './init.sql:/docker-entrypoint-initdb.d/init.sql'
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
       #onde de vai ficar armazenado os dados do banco de dados do docker
-      - './postgres-data:/var/lib/postgres/data'
+      - postgres_data:/var/lib/postgresql/data
+volumes:
+  postgres_data:
