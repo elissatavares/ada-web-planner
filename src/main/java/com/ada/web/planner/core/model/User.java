@@ -1,10 +1,11 @@
 package com.ada.web.planner.core.model;
 
+import com.ada.web.planner.controller.dto.user.UserRequestDTO;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "user")
 @Table(name = "users")
 public class User {
     @Id
@@ -19,14 +20,13 @@ public class User {
 
     private String password;
 
-    public User(String userName, String email, String passwordEncoder) {
-        this.username = userName;
-        this.email = email;
-        this.password = passwordEncoder;
-    }
-
     public User() {
 
+    }
+    public User(UserRequestDTO requestDTO) {
+        this.username = requestDTO.userName();
+        this.email = requestDTO.email();
+        this.password = requestDTO.password();
     }
 
     @Override

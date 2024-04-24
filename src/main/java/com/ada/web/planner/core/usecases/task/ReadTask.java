@@ -1,4 +1,4 @@
 package com.ada.web.planner.core.usecases.task;
 
-public interface GetTask {
+public interface ReadTask {
 }

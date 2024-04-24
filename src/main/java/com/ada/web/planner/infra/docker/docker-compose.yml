@@ -6,7 +6,6 @@ services:
     #imagem do banco de dados do postgres
     image: postgres
     container_name: db-planner
-    restart: unless-stopped
     #variáveis de ambiente
     environment:
       POSTGRES_USER: "postgres"
@@ -17,7 +16,7 @@ services:
       - "5432:5432"
     volumes:
       #arquivo que vai ser anicializado pra criar o banco de dados
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./create-db-planner.sql:/docker-entrypoint-initdb.d/create-db-planner.sql
       #onde de vai ficar armazenado os dados do banco de dados do docker
       - postgres_data:/var/lib/postgresql/data
 volumes:

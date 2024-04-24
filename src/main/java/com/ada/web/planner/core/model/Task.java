@@ -1,7 +1,6 @@
 package com.ada.web.planner.core.model;
 
 import jakarta.persistence.*;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import java.time.LocalDateTime;
 

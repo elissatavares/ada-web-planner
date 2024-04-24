@@ -4,19 +4,18 @@ CREATE DATABASE planner;
 
 CREATE TABLE users (
                        id UUID PRIMARY KEY NOT NULL,
-                       username VARCHAR(50) NOT NULL,
-                       email VARCHAR(100) NOT NULL UNIQUE,
-                       password VARCHAR(255) NOT NULL,
+                       username TEXT NOT NULL,
+                       email TEXT NOT NULL UNIQUE,
+                       password TEXT NOT NULL,
                        created_at TIMESTAMP NOT NULL
 );
 
 
 CREATE TABLE tasks (
                        id SERIAL PRIMARY KEY NOT NULL ,
-                       title VARCHAR(255) NOT NULL ,
-                       description VARCHAR(255),
+                       title TEXT NOT NULL ,
+                       description TEXT,
                        created_at TIMESTAMP NOT NULL ,
                        due_date TIMESTAMP,
                        completed BOOLEAN DEFAULT FALSE
 );
-

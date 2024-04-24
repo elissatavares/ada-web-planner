@@ -1,6 +1,6 @@
 package com.ada.web.planner.controller;
 
-import com.ada.web.planner.dto.task.TaskResponseDTO;
+import com.ada.web.planner.controller.dto.task.TaskResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/planner/tasks")
-public class TasksController {
+public class TaskController {
 
 
     @GetMapping
