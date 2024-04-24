@@ -1,6 +1,6 @@
 package com.ada.web.planner.controller;
 
-import com.ada.web.planner.controller.dto.task.TaskResponseDTO;
+import com.ada.web.planner.core.dto.task.CreateTaskResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,32 +14,43 @@ public class TaskController {
 
 
     @GetMapping
-    public ResponseEntity<List<TaskResponseDTO>> getAllTasks() {
+    public ResponseEntity<List<CreateTaskResponseDTO>> getAllTasks() {
         // Implementation to get all user's todos
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
     }
 
 //    @PostMapping
-//    public ResponseEntity<TaskResponseDTO> addTask() {
+//    public ResponseEntity<CreateTaskResponseDTO> addTask() {
 //        // Implementation to add a new todo
-//        return new ResponseEntity<>(new TaskResponseDTO(), HttpStatus.CREATED);
+//        return new ResponseEntity<>(new CreateTaskResponseDTO(), HttpStatus.CREATED);
 //    }
 //
 //    @GetMapping("/{id}")
-//    public ResponseEntity<TaskResponseDTO> getTaskById(@PathVariable Long id) {
+//    public ResponseEntity<CreateTaskResponseDTO> getTaskById(@PathVariable Long id) {
 //        // Implementation to get details of a specific todo by ID
-//        return new ResponseEntity<>(new TaskResponseDTO(), HttpStatus.OK);
+//        return new ResponseEntity<>(new CreateTaskResponseDTO(), HttpStatus.OK);
 //    }
+
 //
 //    @PutMapping("/{id}")
-//    public ResponseEntity<TaskResponseDTO> updateTaks(@PathVariable String id) {
+//    public ResponseEntity<CreateTaskResponseDTO> updateTaks(@PathVariable String id) {
 //        // Implementation to update a specific todo by ID
-//        return new ResponseEntity<>(new TaskResponseDTO(), HttpStatus.OK);
+//        return new ResponseEntity<>(new CreateTaskResponseDTO(), HttpStatus.OK);
 //    }
+//  @PatchMapping("/{id}")
+//      public ResponseEntity<?> markTaskAsCompleted(@PathVariable String id) {
+    //    // Lógica para marcar a tarefa como concluída
+    //    try {
+    //        Todo updatedTodo = todoService.markTaskAsCompleted(id);
+    //        return ResponseEntity.ok(updatedTodo);
+    //    } catch (TodoNotFoundException e) {
+    //        return ResponseEntity.notFound().build();
+//    }
+//}
 //
-//    @DeleteMapping("/user/todos/{id}")
-//    public ResponseEntity<TaskResponseDTO> deleteTodo(@PathVariable String id) {
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<CreateTaskResponseDTO> deleteTodo(@PathVariable String id) {
 //        // Implementation to delete a specific todo by ID
-//        return new ResponseEntity<>(new TaskResponseDTO(), HttpStatus.OK);
+//        return new ResponseEntity<>(new CreateTaskResponseDTO(), HttpStatus.OK);
 //    }
 }

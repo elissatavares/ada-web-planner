@@ -1,4 +1,4 @@
-package com.ada.web.planner.impl.task;
+package com.ada.web.planner.service.task;
 
 import com.ada.web.planner.core.usecases.task.DeleteTask;
 import org.springframework.stereotype.Service;

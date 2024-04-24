@@ -1,10 +1,11 @@
-package com.ada.web.planner.impl.user;
+package com.ada.web.planner.service.user;
 
 import com.ada.web.planner.core.exceptions.user.ExistingUser;
 import com.ada.web.planner.core.model.User;
 import com.ada.web.planner.core.usecases.user.CreateUser;
 import com.ada.web.planner.infra.repository.PlannerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -21,12 +22,21 @@ public class CreateUserImpl implements CreateUser {
 
     @Override
     public User create(User user) {
-        try {
-            user.setCreated_at(LocalDateTime.now());
-            repository.save(user);
-        }catch (RuntimeException exception){
+        validateUserExist(user.getLogin());
+        encryptPassword(user);
+        user.setCreated_at(LocalDateTime.now());
+        repository.save(user);
+        return user;
+    }
+    @Override
+    public void validateUserExist(String login){
+        if(repository.findByLogin(login) != null){
             throw new ExistingUser();
         }
-        return user;
+    }
+
+    private void encryptPassword(User user){
+        String encryptedPassword = new BCryptPasswordEncoder().encode(user.getPassword());
+        user.setPassword(encryptedPassword);
     }
 }
