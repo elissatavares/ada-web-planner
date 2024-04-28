@@ -4,5 +4,4 @@ import com.ada.web.planner.core.model.User;
 
 public interface CreateUser {
     User create(User user);
-    void validateUserExist(String login);
 }

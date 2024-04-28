@@ -1,6 +1,6 @@
 package com.ada.web.planner.controller;
 
-import com.ada.web.planner.core.dto.task.CreateTaskResponseDTO;
+import com.ada.web.planner.dto.task.TaskResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +14,7 @@ public class TaskController {
 
 
     @GetMapping
-    public ResponseEntity<List<CreateTaskResponseDTO>> getAllTasks() {
+    public ResponseEntity<List<TaskResponseDTO>> getAllTasks() {
         // Implementation to get all user's todos
         return new ResponseEntity<>(new ArrayList<>(), HttpStatus.OK);
     }

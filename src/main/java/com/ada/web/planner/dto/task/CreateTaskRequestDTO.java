@@ -1,4 +1,4 @@
-package com.ada.web.planner.core.dto.task;
+package com.ada.web.planner.dto.task;
 
 
 import java.time.LocalDateTime;

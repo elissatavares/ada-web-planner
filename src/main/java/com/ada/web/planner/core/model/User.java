@@ -1,17 +1,14 @@
 package com.ada.web.planner.core.model;
 
-import com.ada.web.planner.core.dto.user.CreateUserRequestDTO;
+import com.ada.web.planner.dto.user.CreateUserRequestDTO;
 import jakarta.persistence.*;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
-import java.util.Collection;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class User implements UserDetails {
+public class User  {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -21,8 +18,6 @@ public class User implements UserDetails {
     private String surname;
 
     private String login;
-
-    private LocalDateTime created_at;
 
     private String password;
 
@@ -37,13 +32,7 @@ public class User implements UserDetails {
         this.password = requestDTO.password();
     }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 
-    public UUID getId() {
-        return id;
-    }
 
     public String getName() {
         return name;
@@ -57,47 +46,11 @@ public class User implements UserDetails {
         return login;
     }
 
-    public LocalDateTime getCreated_at() {
-        return created_at;
-    }
-
-    public void setCreated_at(LocalDateTime localDateTime) {
-        this.created_at = localDateTime;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-
-    @Override
     public String getPassword() {
         return password;
     }
 
-    @Override
-    public String getUsername() {
-        return login;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
 }
