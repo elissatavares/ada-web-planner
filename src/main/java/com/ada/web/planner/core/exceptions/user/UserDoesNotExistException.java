@@ -4,7 +4,7 @@ import org.springframework.http.HttpStatus;
 
 public class UserDoesNotExistException extends RuntimeException {
 
-    private final HttpStatus httpStatus = HttpStatus.FOUND;
+    private final HttpStatus httpStatus = HttpStatus.NOT_FOUND;
     public UserDoesNotExistException() {
         super("The user does not exist.");
     }

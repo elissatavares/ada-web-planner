@@ -4,7 +4,7 @@ import com.ada.web.planner.core.exceptions.user.UpdateIdenticalPasswordsExceptio
 import com.ada.web.planner.core.exceptions.user.UserDoesNotExistException;
 import com.ada.web.planner.core.model.User;
 import com.ada.web.planner.core.usecases.user.UpdateUser;
-import com.ada.web.planner.infra.repository.PlannerRepository;
+import com.ada.web.planner.infra.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,10 +13,10 @@ import java.util.Optional;
 @Service
 public class UpdateUserImpl implements UpdateUser {
 
-    private final PlannerRepository repository;
+    private final UserRepository repository;
 
     @Autowired
-    public UpdateUserImpl(PlannerRepository repository) {
+    public UpdateUserImpl(UserRepository repository) {
         this.repository = repository;
     }
 

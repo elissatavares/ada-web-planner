@@ -1,8 +1,13 @@
 package com.ada.web.planner.infra.RestExceptionHandler;
 
+import com.ada.web.planner.core.exceptions.task.TaskAlreadyCompletedException;
+import com.ada.web.planner.core.exceptions.task.TaskNotFoundException;
+import com.ada.web.planner.core.exceptions.task.UserHasNoTasksException;
 import com.ada.web.planner.core.exceptions.user.ExistingUserException;
 import com.ada.web.planner.core.exceptions.user.UpdateIdenticalPasswordsException;
 import com.ada.web.planner.core.exceptions.user.UserDoesNotExistException;
+import com.ada.web.planner.dto.response.ErrorObject;
+import com.ada.web.planner.dto.response.ErrorResponse;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,6 +21,7 @@ import java.util.stream.Collectors;
 @ControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
+    //user
     @ExceptionHandler(ExistingUserException.class)
     private ResponseEntity<ErrorResponse> existingUserHandler(ExistingUserException exception){
         ErrorObject errorObject = new ErrorObject("Login is not available",
@@ -58,6 +64,51 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
+
+    //task
+    @ExceptionHandler(TaskNotFoundException.class)
+    private ResponseEntity<ErrorResponse> taskNotFoundHandler(TaskNotFoundException exception){
+        ErrorObject errorObject = new ErrorObject("The task does not exist.",
+                "task",
+                "NOT_FOUND");
+
+        ErrorResponse errorResponse = new ErrorResponse(exception.getMessage(),
+                exception.httpStatus().value(),
+                exception.httpStatus().getReasonPhrase(),
+                errorObject);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(UserHasNoTasksException.class)
+    private ResponseEntity<ErrorResponse> userHasNoTasksHandler(UserHasNoTasksException exception){
+        ErrorObject errorObject = new ErrorObject("The user has no tasks.",
+                "user",
+                "NO_TASKS");
+
+        ErrorResponse errorResponse = new ErrorResponse(exception.getMessage(),
+                exception.httpStatus().value(),
+                exception.httpStatus().getReasonPhrase(),
+                errorObject);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(TaskAlreadyCompletedException.class)
+    private ResponseEntity<ErrorResponse> taskAlreadyCompletedHandler(TaskAlreadyCompletedException exception){
+        ErrorObject errorObject = new ErrorObject("The task has already been completed.",
+                "task",
+                "ALREADY_COMPLETED");
+
+        ErrorResponse errorResponse = new ErrorResponse(exception.getMessage(),
+                exception.httpStatus().value(),
+                exception.httpStatus().getReasonPhrase(),
+                errorObject);
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+    }
+
+    //@Valid
     @Override
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException exception, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
         List<ErrorObject> errors = getErrors(exception);

@@ -1,41 +1,34 @@
 package com.ada.web.planner.service.task;
 
 import com.ada.web.planner.core.exceptions.task.TaskNotFoundException;
-import com.ada.web.planner.core.exceptions.task.UserHasNoTasksException;
 import com.ada.web.planner.core.model.Task;
 import com.ada.web.planner.core.model.User;
-import com.ada.web.planner.core.usecases.task.ReadTask;
+import com.ada.web.planner.core.usecases.task.UpdateTask;
 import com.ada.web.planner.core.usecases.user.ReadUser;
 import com.ada.web.planner.infra.repository.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ReadTaskImpl implements ReadTask {
+public class UpdateTaskImpl implements UpdateTask {
 
     private final TaskRepository repository;
     private final ReadUser readUserService;
 
     @Autowired
-    public ReadTaskImpl(TaskRepository repository, ReadUser readUserService) {
-        this.repository = repository;
+    public UpdateTaskImpl(TaskRepository taskRepository, ReadUser readUserService) {
+        this.repository = taskRepository;
         this.readUserService = readUserService;
     }
 
     @Override
-    public Task read(Long id, String login) {
+    public Task completed(Long id, String login) {
         User user = readUserService.read(login);
-        return validateTaskExist(id);
-    }
-
-    @Override
-    public List<Task> readALl(String login) {
-        User user = readUserService.read(login);
-        List<Task> taskList = validateTaskListExist(user);
-        return taskList;
+        Task task = validateTaskExist(id);
+        task.completed();
+        return repository.saveAndFlush(task);
     }
 
     //refatorar: codigo repetido nas outras classes do service
@@ -46,14 +39,4 @@ public class ReadTaskImpl implements ReadTask {
         }
         return task.get();
     }
-
-    //refatorar: codigo repetido nas outras classes do service
-    private List<Task> validateTaskListExist(User user){
-        List<Task> taskList = repository.findAllByUserId(user);
-        if(taskList.isEmpty()){
-            throw new UserHasNoTasksException();
-        }
-        return taskList;
-    }
-
 }

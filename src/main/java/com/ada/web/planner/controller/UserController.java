@@ -1,12 +1,13 @@
 package com.ada.web.planner.controller;
 
+import com.ada.web.planner.controller.response.UserResponseFactory;
 import com.ada.web.planner.core.model.User;
 import com.ada.web.planner.core.usecases.user.CreateUser;
 import com.ada.web.planner.core.usecases.user.DeleteUser;
 import com.ada.web.planner.core.usecases.user.ReadUser;
 import com.ada.web.planner.core.usecases.user.UpdateUser;
 import com.ada.web.planner.dto.user.CreateUserRequestDTO;
-import com.ada.web.planner.dto.RequestResultDTO;
+import com.ada.web.planner.dto.response.ResponseDTO;
 import com.ada.web.planner.dto.user.UpdateUserRequestDTO;
 import com.ada.web.planner.dto.user.UserDTO;
 import jakarta.validation.Valid;
@@ -42,35 +43,35 @@ public class UserController {
     }
 
     @GetMapping("/{login}")
-    public ResponseEntity<RequestResultDTO> readUser(@PathVariable("login") @NotBlank String login) {
+    public ResponseEntity<ResponseDTO> readUser(@PathVariable("login") @NotBlank String login) {
         User user = readService.read(login);
         UserDTO userDTO = UserDTO.toDTO(user);
-        RequestResultDTO requestResultDTO = RequestResultDTO.userDetails(userDTO);
+        ResponseDTO requestResultDTO = UserResponseFactory.userDetails(userDTO);
         return new ResponseEntity<>(requestResultDTO, HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity<RequestResultDTO> registerUser(@RequestBody @Valid CreateUserRequestDTO userData) {
+    public ResponseEntity<ResponseDTO> registerUser(@RequestBody @Valid CreateUserRequestDTO userData) {
         User user = new User(userData);
         User userCreated = createService.create(user);
         UserDTO userDTO = UserDTO.toDTO(userCreated);
-        RequestResultDTO requestResultDTO = RequestResultDTO.successfullyCreated(userDTO);
+        ResponseDTO requestResultDTO = UserResponseFactory.createdSuccessfully(userDTO);
         return new ResponseEntity<>(requestResultDTO, HttpStatus.CREATED);
     }
 
     @PutMapping("/{login}")
-    public ResponseEntity<RequestResultDTO> updateUser(@PathVariable("login") @NotBlank String login,
-                                              @RequestBody @Valid UpdateUserRequestDTO newPassword) {
+    public ResponseEntity<ResponseDTO> updateUser(@PathVariable("login") @NotBlank String login,
+                                                  @RequestBody @Valid UpdateUserRequestDTO newPassword) {
 
         updateService.update(login, newPassword.password());
-        RequestResultDTO requestResultDTO = RequestResultDTO.successfullyUpdate();
+        ResponseDTO requestResultDTO = UserResponseFactory.updatedSuccessfully();
         return new ResponseEntity<>(requestResultDTO, HttpStatus.OK);
     }
     @DeleteMapping("/{login}")
-    public ResponseEntity<RequestResultDTO> deleteUSer(@PathVariable("login") @NotBlank String login) {
+    public ResponseEntity<ResponseDTO> deleteUSer(@PathVariable("login") @NotBlank String login) {
         User user = deleteService.delete(login);
         UserDTO userDTO = UserDTO.toDTO(user);
-        RequestResultDTO requestResultDTO = RequestResultDTO.successfullyDeleted(userDTO);
+        ResponseDTO requestResultDTO = UserResponseFactory.deletedSuccessfully(userDTO);
         return new ResponseEntity<>(requestResultDTO, HttpStatus.OK);
     }
 }

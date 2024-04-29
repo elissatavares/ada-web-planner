@@ -3,17 +3,17 @@ package com.ada.web.planner.service.user;
 import com.ada.web.planner.core.exceptions.user.ExistingUserException;
 import com.ada.web.planner.core.model.User;
 import com.ada.web.planner.core.usecases.user.CreateUser;
-import com.ada.web.planner.infra.repository.PlannerRepository;
+import com.ada.web.planner.infra.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class CreateUserImpl implements CreateUser {
 
-    private final PlannerRepository repository;
+    private final UserRepository repository;
 
     @Autowired
-    public CreateUserImpl(PlannerRepository repository) {
+    public CreateUserImpl(UserRepository repository) {
         this.repository = repository;
     }
 

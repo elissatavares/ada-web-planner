@@ -13,7 +13,9 @@ CREATE TABLE users (
 
 
 CREATE TABLE tasks (
-                       id SERIAL PRIMARY KEY NOT NULL ,
+                       id SERIAL PRIMARY KEY NOT NULL,
+                       user_id UUID,
+                       FOREIGN KEY (user_id) REFERENCES users(id),
                        title TEXT NOT NULL ,
                        description TEXT,
                        created_at TIMESTAMP NOT NULL ,

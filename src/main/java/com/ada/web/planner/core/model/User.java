@@ -38,6 +38,10 @@ public class User  {
         return name;
     }
 
+    public UUID getId() {
+        return id;
+    }
+
     public String getSurname() {
         return surname;
     }

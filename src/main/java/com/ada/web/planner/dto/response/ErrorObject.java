@@ -1,4 +1,4 @@
-package com.ada.web.planner.infra.RestExceptionHandler;
+package com.ada.web.planner.dto.response;
 
 public record ErrorObject(String message, String field, Object parameter) {
 
