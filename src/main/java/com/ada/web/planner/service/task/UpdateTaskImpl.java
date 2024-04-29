@@ -1,5 +1,6 @@
 package com.ada.web.planner.service.task;
 
+import com.ada.web.planner.core.exceptions.task.TaskAlreadyCompletedException;
 import com.ada.web.planner.core.exceptions.task.TaskNotFoundException;
 import com.ada.web.planner.core.model.Task;
 import com.ada.web.planner.core.model.User;
@@ -27,6 +28,7 @@ public class UpdateTaskImpl implements UpdateTask {
     public Task completed(Long id, String login) {
         User user = readUserService.read(login);
         Task task = validateTaskExist(id);
+        validateTaskCompleted(task);
         task.completed();
         return repository.saveAndFlush(task);
     }
@@ -38,5 +40,11 @@ public class UpdateTaskImpl implements UpdateTask {
             throw new TaskNotFoundException();
         }
         return task.get();
+    }
+
+    private void validateTaskCompleted(Task task){
+        if(task.getCompleted()){
+            throw new TaskAlreadyCompletedException();
+        }
     }
 }
