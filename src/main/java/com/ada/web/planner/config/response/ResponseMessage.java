@@ -1,8 +1,9 @@
-package com.ada.web.planner.controller.response;
+package com.ada.web.planner.config.response;
 
 import org.springframework.http.HttpStatus;
 
 public enum ResponseMessage {
+    USER_SUCCESSFULLY_LOGGED_IN("The user has been successfully authenticated and authorized", HttpStatus.OK),
     USER_CREATED_SUCCESSFULLY("User created successfully", HttpStatus.CREATED),
     USER_DELETED_SUCCESSFULLY("User deleted successfully", HttpStatus.OK),
     USER_DETAILS_RETRIEVED_SUCCESSFULLY("User details retrieved successfully", HttpStatus.OK),

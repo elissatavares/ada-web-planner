@@ -2,11 +2,14 @@ package com.ada.web.planner.core.model;
 
 import com.ada.web.planner.dto.task.CreateTaskRequestDTO;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
+
 @Entity
 @Table(name = "tasks")
-public class Task {
+public class Task extends RepresentationModel<Task> {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +28,13 @@ public class Task {
         this.due_date = taskRequestDTO.due_date();
         this.completed = false;
     }
+
+    public Task(String title, String description, LocalDateTime due_date) {
+        this.title = title;
+        this.description = description;
+        this.due_date = due_date;
+    }
+
 
     public void setCreated_at(LocalDateTime created_at) {
         this.created_at = created_at;

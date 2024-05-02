@@ -1,13 +1,11 @@
 package com.ada.web.planner.service.task;
 
 import com.ada.web.planner.core.exceptions.task.TaskNotFoundException;
-import com.ada.web.planner.core.exceptions.user.ExistingUserException;
 import com.ada.web.planner.core.model.Task;
-import com.ada.web.planner.core.model.User;
 import com.ada.web.planner.core.usecases.task.DeleteTask;
-import com.ada.web.planner.core.usecases.user.ReadUser;
+import com.ada.web.planner.dto.task.TaskDTO;
+import com.ada.web.planner.config.hateoas.HateoasTask;
 import com.ada.web.planner.infra.repository.TaskRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -16,28 +14,21 @@ import java.util.Optional;
 public class DeleteTaskImpl implements DeleteTask {
 
     private final TaskRepository repository;
-    private final ReadUser readUserService;
+    private final HateoasTask hateoasTask;
 
-    @Autowired
-    public DeleteTaskImpl(TaskRepository repository, ReadUser readUserService) {
+    public DeleteTaskImpl(TaskRepository repository, HateoasTask hateoasTask) {
         this.repository = repository;
-        this.readUserService = readUserService;
+        this.hateoasTask = hateoasTask;
     }
 
     @Override
-    public Task delete(Long id, String login) {
-        User user = readUserService.read(login);
-        Task task = validateTaskExist(id);
-        repository.delete(task);
-        return task;
-    }
-
-    //refatorar: codigo repetido nas outras classes do service
-    private Task validateTaskExist(Long id){
-        Optional<Task> task = repository.findById(id);
+    public TaskDTO delete(Long idTask) {
+        Optional<Task> task = repository.findById(idTask);
         if(task.isEmpty()){
             throw new TaskNotFoundException();
         }
-        return task.get();
+        repository.delete(task.get());
+
+        return TaskDTO.toDTO(task.get().add(hateoasTask.relAllTasks()));
     }
 }
