@@ -1,6 +1,5 @@
-package com.ada.web.planner.controller.response;
+package com.ada.web.planner.dto.response;
 
-import com.ada.web.planner.dto.response.ResponseDTO;
 import com.ada.web.planner.dto.task.TaskDTO;
 
 public class TaskResponseFactory {

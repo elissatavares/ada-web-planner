@@ -4,15 +4,16 @@ import com.ada.web.planner.core.model.Task;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 public record TaskDTO(Long id,
                       String title,
                       String description,
                       String created_at,
                       String due_date,
-                      Boolean completed) {
-
+                      Boolean completed,
+                      Object links) {
     public static TaskDTO toDTO(Task task){
-        return new TaskDTO(task.getId(), task.getTitle(), task.getDescription(), formatDateTime(task.getCreated_at()), formatDateTime(task.getDue_date()), task.getCompleted());
+        return new TaskDTO(task.getId(), task.getTitle(), task.getDescription(), formatDateTime(task.getCreated_at()), formatDateTime(task.getDue_date()), task.getCompleted(), task.getLinks());
     }
 
     private static String formatDateTime(LocalDateTime dateTime) {

@@ -2,13 +2,15 @@ package com.ada.web.planner.core.model;
 
 import com.ada.web.planner.dto.user.CreateUserRequestDTO;
 import jakarta.persistence.*;
+import org.springframework.hateoas.RepresentationModel;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.util.Objects;
 import java.util.UUID;
 
 @Entity
 @Table(name = "users")
-public class User  {
+public class User extends RepresentationModel<User>  {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
@@ -32,7 +34,12 @@ public class User  {
         this.password = requestDTO.password();
     }
 
-
+    public User(String name, String surname, String login, String password) {
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+    }
 
     public String getName() {
         return name;

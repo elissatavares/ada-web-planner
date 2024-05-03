@@ -6,5 +6,5 @@ public record ResponseDTO(
         @NotBlank String message,
         int code,
         @NotBlank String status,
-        Object object) {
+        Object body) {
 }
