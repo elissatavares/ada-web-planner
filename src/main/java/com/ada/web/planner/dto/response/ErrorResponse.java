@@ -1,4 +1,4 @@
-package com.ada.web.planner.config.response;
+package com.ada.web.planner.dto.response;
 
 
 public record ErrorResponse(

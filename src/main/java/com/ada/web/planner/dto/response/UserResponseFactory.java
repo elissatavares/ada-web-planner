@@ -1,4 +1,4 @@
-package com.ada.web.planner.config.response;
+package com.ada.web.planner.dto.response;
 
 import com.ada.web.planner.dto.user.LoginResponse;
 import com.ada.web.planner.dto.user.UserDTO;

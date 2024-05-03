@@ -1,14 +1,15 @@
 package com.ada.web.planner.controller;
 
-import com.ada.web.planner.config.response.TaskResponseFactory;
+import com.ada.web.planner.dto.response.TaskResponseFactory;
 import com.ada.web.planner.core.model.Task;
 import com.ada.web.planner.core.usecases.task.CreateTask;
 import com.ada.web.planner.core.usecases.task.DeleteTask;
 import com.ada.web.planner.core.usecases.task.ReadTask;
 import com.ada.web.planner.core.usecases.task.UpdateTask;
-import com.ada.web.planner.config.response.ResponseDTO;
+import com.ada.web.planner.dto.response.ResponseDTO;
 import com.ada.web.planner.dto.task.CreateTaskRequestDTO;
 import com.ada.web.planner.dto.task.TaskDTO;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,7 @@ public class TaskController {
         this.deleteService = deleteService;
     }
 
+    @Operation(description = "Exibe os detalhes de todas as tarefas de um usuário")
     @GetMapping
     public ResponseEntity<ResponseDTO> readAllTasks() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -46,6 +48,7 @@ public class TaskController {
         return ResponseEntity.ok().body(requestResultDTO);
     }
 
+    @Operation(description = "Exibe os detalhes de uma tarefa específica de um usuário")
     @GetMapping("/{id}")
     public ResponseEntity<ResponseDTO> readTask(@PathVariable @NotNull Long id) {
         TaskDTO taskDTO = readService.read(id);
@@ -53,6 +56,7 @@ public class TaskController {
         return ResponseEntity.ok().body(requestResultDTO);
     }
 
+    @Operation(description = "Cria uma tarefa")
     @PostMapping
     public ResponseEntity<ResponseDTO> createTask(@RequestBody CreateTaskRequestDTO taskData) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -64,6 +68,7 @@ public class TaskController {
         return new ResponseEntity<>(requestResultDTO, HttpStatus.CREATED);
     }
 
+    @Operation(description = "Marca uma tarefa como concluída")
     @PatchMapping("/{id}")
     public ResponseEntity<ResponseDTO> markTaskAsCompleted(@PathVariable @NotNull Long id) {
         TaskDTO taskDTO = updateService.completed(id);
@@ -71,6 +76,7 @@ public class TaskController {
         return ResponseEntity.ok().body(requestResultDTO);
     }
 
+    @Operation(description = "Deleta uma tarefa")
     @DeleteMapping("/{id}")
     public ResponseEntity<ResponseDTO> deleteTask(@PathVariable @NotNull Long id) {
         TaskDTO taskDTO = deleteService.delete(id);

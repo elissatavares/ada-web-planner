@@ -1,7 +1,7 @@
 package com.ada.web.planner.infra.RestExceptionHandler;
 
-import com.ada.web.planner.config.response.ErrorObject;
-import com.ada.web.planner.config.response.ErrorResponse;
+import com.ada.web.planner.dto.response.ErrorObject;
+import com.ada.web.planner.dto.response.ErrorResponse;
 import org.springframework.http.*;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
